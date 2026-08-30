@@ -34,6 +34,10 @@ const CartItem = () => {
     );
   }
 
+  const calculateTotal = () => {
+    return items.reduce((total, item) => total + item.price * item.quantity, 0);
+  };
+
   return (
     <div>
       <nav className="navbar">
@@ -143,7 +147,7 @@ const CartItem = () => {
           <h3>
             Total Amount:{' '}
             <span style={{ color: '#2e7d32', fontWeight: 'bold' }}>
-              ${totalAmount.toFixed(2)}
+              ${calculateTotal().toFixed(2)}
             </span>
           </h3>
         </div>

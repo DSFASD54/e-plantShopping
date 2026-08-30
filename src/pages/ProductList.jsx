@@ -34,11 +34,11 @@ const ProductList = () => {
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.items);
   const totalQuantity = useSelector((state) => state.cart.totalQuantity);
-  const [addedItems, setAddedItems] = useState(new Set());
+  const [addedItems, setAddedItems] = useState({});
 
   const handleAddToCart = (plant) => {
     dispatch(addItem(plant));
-    setAddedItems((prev) => new Set(prev).add(plant.id));
+    setAddedItems((prev) => ({ ...prev, [plant.id]: true }));
   };
 
   return (
@@ -66,9 +66,8 @@ const ProductList = () => {
           </h3>
           <div className="product-grid">
             {plants.map((plant) => {
-              const inCart = cartItems.some((item) => item.id === plant.id);
-              const isAdded = addedItems.has(plant.id);
-              const disabled = inCart || isAdded;
+              const isAdded = addedItems[plant.id] || false;
+              const disabled = isAdded;
 
               return (
                 <div className="product-card" key={plant.id}>
